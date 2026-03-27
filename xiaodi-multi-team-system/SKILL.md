@@ -1,7 +1,7 @@
 ---
 name: xiaodi-multi-team-system
 description: 小弟多团队协作系统 - 金融、电商、多媒体、办公四大团队 + 智能切换器
-version: "1.0.0"
+version: "1.0.1"
 author: xiaodi
 homepage: https://github.com/mx6315909/xiaodi-multi-team-skills
 metadata:
@@ -9,6 +9,7 @@ metadata:
     emoji: 🤖
     requires:
       tools: ["web_search", "web_fetch", "memory_search", "exec", "browser"]
+      binaries: ["ffmpeg", "ffprobe", "convert"]
 ---
 
 # 🤖 小弟多团队协作系统
@@ -28,12 +29,73 @@ metadata:
 
 ---
 
-## ✨ 核心特性
+## ⚙️ 系统要求
 
-- **多 Agent 协作架构**：Master-Worker 模式，角色分工明确
-- **智能团队切换**：自动识别用户意图，一键切换团队
-- **完整工作流编排**：支持复杂任务流程
-- **安全的环境变量配置**：API Key 通过环境变量管理
+### 必需工具
+
+| 工具 | 用途 | 安装命令 |
+|------|------|----------|
+| `ffmpeg` | 视频处理 | `apt install ffmpeg` 或 `brew install ffmpeg` |
+| `ffprobe` | 视频分析 | 随 ffmpeg 安装 |
+| `ImageMagick` | 图片处理 | `apt install imagemagick` 或 `brew install imagemagick` |
+
+### 可选工具
+
+| 工具 | 用途 | 安装命令 |
+|------|------|----------|
+| `whisper` | 语音识别/字幕生成 | `pip install openai-whisper` |
+| `akshare` | A股数据 | `pip install akshare` |
+
+### 权限说明
+
+本技能需要以下工具权限：
+
+- **web_search** - 搜索网络信息
+- **web_fetch** - 获取网页内容
+- **memory_search** - 搜索记忆
+- **exec** - 执行系统命令（ffmpeg、ImageMagick 等）
+- **browser** - 浏览器自动化
+
+---
+
+## 🔐 数据源声明
+
+### 金融数据（公开 API）
+
+| 数据源 | 用途 | 认证 |
+|--------|------|------|
+| 东方财富 | 股票行情、财务数据 | 无需认证 |
+| 腾讯财经 | 股票行情 | 无需认证 |
+| 新浪财经 | 新闻、舆情 | 无需认证 |
+
+### 电商数据（公开 API）
+
+| 数据源 | 用途 | 认证 |
+|--------|------|------|
+| 亚马逊 | 商品信息、BSR | 无需认证 |
+| TikTok | 商品信息 | 无需认证 |
+
+---
+
+## 🔑 可选 API 配置
+
+AI 视频生成功能需要配置以下环境变量（可选）：
+
+```bash
+# 可灵 AI
+export KLING_API_KEY=your_key
+
+# Runway Gen-3
+export RUNWAY_API_KEY=your_key
+
+# Pika Labs
+export PIKA_API_KEY=your_key
+
+# OpenAI (Sora/DALL-E)
+export OPENAI_API_KEY=your_key
+```
+
+**注意**：这些 API Key 仅用于 AI 视频生成，不配置不影响其他功能。
 
 ---
 
@@ -57,8 +119,8 @@ clawhub install xiaodi-multi-team-system
 监控竞品价格变化
 
 # 多媒体场景
-压缩这个视频
-生成一个视频：猫咪在阳光下打盹
+压缩这个视频 /path/to/video.mp4
+提取视频第10秒的帧
 
 # 办公场景
 帮我安排明天下午3点的会议
@@ -73,38 +135,32 @@ clawhub install xiaodi-multi-team-system
 
 7 大角色协作：投顾专家、行业研究员、投行专家、市值管理助理、财富专员、商机助理、舆情助理
 
-功能：个股分析、持仓诊断、资产配置、舆情监控
+**数据源**：东方财富、腾讯财经、新浪财经（均为公开 API）
 
 ### 🛒 电商团队
 
 8 大角色协作：选品专家、运营专员、定价专员、客服专员、数据分析师、竞品分析师、内容创作者、投放专员
 
-功能：选品分析、竞品监控、利润计算、Listing 生成
+**数据源**：亚马逊、TikTok（公开数据）
 
 ### 🎬 多媒体团队
 
 7 大角色协作：视频剪辑师、视频创作师、字幕生成器、图片处理师、AI 绘图师、音频处理师、质量检查员
 
-功能：视频压缩/生成、图片处理、字幕生成、音频转码
+**依赖**：ffmpeg、ImageMagick、whisper（可选）
 
 ### 📋 办公团队
 
 4 大角色协作：日程秘书、邮件秘书、文档秘书、会议秘书
 
-功能：日程管理、邮件处理、文档管理、会议记录
-
 ---
 
-## 🔧 配置
+## ⚠️ 安全声明
 
-环境变量配置（可选）：
-
-```bash
-# AI 视频生成 API
-export KLING_API_KEY=your_key
-export RUNWAY_API_KEY=your_key
-export PIKA_API_KEY=your_key
-```
+1. **exec 权限**：仅用于调用 ffmpeg、ImageMagick 等媒体处理工具，不会执行任意危险命令
+2. **browser 权限**：仅用于获取公开网页数据，不会访问需要认证的私密页面
+3. **API Key**：所有 API Key 通过环境变量配置，不会硬编码或存储在代码中
+4. **数据安全**：不读取主机敏感文件，不外传用户数据
 
 ---
 
