@@ -1,0 +1,48 @@
+{
+  "name": "xiaodi-multi-team-system",
+  "version": "1.0.0",
+  "description": "小弟多团队协作系统 - 金融、电商、多媒体、办公四大团队 + 智能切换器，26 个专业 Agent 角色",
+  "author": "xiaodi <mxbot-xiaodi@agentmail.to>",
+  "license": "MIT",
+  "category": "Multi-Agent",
+  "tags": ["multi-agent", "team", "finance", "ecommerce", "media", "office", "collaboration", "xiaodi"],
+  "pricing": {
+    "type": "free"
+  },
+  "features": [
+    "4 大功能团队 + 1 个智能切换器",
+    "26 个专业 Agent 角色",
+    "Master-Worker 协作架构",
+    "智能团队切换",
+    "完整工作流编排",
+    "安全的 API Key 管理"
+  ],
+  "teams": {
+    "financial": {
+      "name": "金融团队",
+      "icon": "📊",
+      "members": 7,
+      "description": "股票分析、投资决策"
+    },
+    "ecom": {
+      "name": "电商团队",
+      "icon": "🛒",
+      "members": 8,
+      "description": "选品、运营、定价"
+    },
+    "media": {
+      "name": "多媒体团队",
+      "icon": "🎬",
+      "members": 7,
+      "description": "视频、图片、音频处理"
+    },
+    "office": {
+      "name": "办公团队",
+      "icon": "📋",
+      "members": 4,
+      "description": "日程、邮件、文档"
+    }
+  },
+  "total_agents": 26,
+  "homepage": "https://github.com/mx6315909/xiaodi-multi-team-skills"
+}
