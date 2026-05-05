@@ -17,8 +17,13 @@
     ],
     "tools": {
       "allowlist": [
-        "read", "write", "memory_search", "memory_get",
-        "sessions_send", "sessions_list", "message"
+        "read",
+        "write",
+        "memory_search",
+        "memory_get",
+        "sessions_send",
+        "sessions_list",
+        "message"
       ]
     },
     "delegation": {
@@ -38,10 +43,17 @@
       "icon": "📅",
       "model": {
         "primary": "bailian/glm-5",
-        "fallbacks": ["bailian/qwen3.5-plus"]
+        "fallbacks": [
+          "bailian/qwen3.5-plus"
+        ]
       },
       "tools": {
-        "allowlist": ["read", "write", "cron", "message"]
+        "allowlist": [
+          "read",
+          "write",
+          "cron",
+          "message"
+        ]
       },
       "capabilities": [
         "智能日程冲突检测",
@@ -63,7 +75,12 @@
         "primary": "bailian/glm-5"
       },
       "tools": {
-        "allowlist": ["read", "write", "web_search", "message"]
+        "allowlist": [
+          "read",
+          "write",
+          "web_search",
+          "message"
+        ]
       },
       "capabilities": [
         "邮件智能分类",
@@ -71,7 +88,12 @@
         "智能回复草稿生成",
         "邮件追踪提醒"
       ],
-      "templates": ["正式回复", "礼貌拒绝", "询价回复", "会议确认"]
+      "templates": [
+        "正式回复",
+        "礼貌拒绝",
+        "询价回复",
+        "会议确认"
+      ]
     },
     "document-manager": {
       "name": "文档管理师",
@@ -81,13 +103,19 @@
         "primary": "bailian/glm-5"
       },
       "tools": {
-        "allowlist": ["read", "write", "exec", "pdf"]
+        "allowlist": [
+          "read",
+          "write",
+          "exec",
+          "pdf"
+        ]
       },
       "capabilities": [
         "文档格式标准化",
         "多格式转换",
         "版本追踪",
-        "文档归档"
+        "文档归档",
+        "智能文档排版（Markdown→docx）"
       ],
       "format_standards": {
         "font": "仿宋_GB2312",
@@ -99,7 +127,10 @@
           "left": "2.8cm",
           "right": "2.6cm"
         }
-      }
+      },
+      "scripts": [
+        "doc_formatter.py"
+      ]
     },
     "meeting-assistant": {
       "name": "会议助手",
@@ -109,7 +140,12 @@
         "primary": "bailian/glm-5"
       },
       "tools": {
-        "allowlist": ["read", "write", "memory_search", "message"]
+        "allowlist": [
+          "read",
+          "write",
+          "memory_search",
+          "message"
+        ]
       },
       "capabilities": [
         "会议纪要生成",
@@ -117,7 +153,9 @@
         "待办事项提取",
         "决议跟踪"
       ],
-      "scripts": ["meeting_minutes.py"]
+      "scripts": [
+        "meeting_minutes.py"
+      ]
     },
     "mindmap-builder": {
       "name": "思维构建师",
@@ -127,7 +165,11 @@
         "primary": "bailian/glm-5"
       },
       "tools": {
-        "allowlist": ["read", "write", "web_search"]
+        "allowlist": [
+          "read",
+          "write",
+          "web_search"
+        ]
       },
       "capabilities": [
         "文本结构提取",
@@ -135,8 +177,15 @@
         "关键词快速生成",
         "知识体系构建"
       ],
-      "output_formats": ["mermaid", "markdown", "markmap", "plantuml"],
-      "scripts": ["mindmap.py"]
+      "output_formats": [
+        "mermaid",
+        "markdown",
+        "markmap",
+        "plantuml"
+      ],
+      "scripts": [
+        "mindmap.py"
+      ]
     }
   },
   "workflows": {
@@ -208,12 +257,41 @@
           "action": "create_outline_map"
         }
       ]
+    },
+    "document_formatting": {
+      "name": "文档排版工作流",
+      "steps": [
+        {
+          "id": "analyze",
+          "agent": "document-manager",
+          "action": "analyze_content"
+        },
+        {
+          "id": "format",
+          "agent": "document-manager",
+          "action": "format_document"
+        },
+        {
+          "id": "validate",
+          "agent": "office-director",
+          "action": "quality_check"
+        },
+        {
+          "id": "output",
+          "agent": "document-manager",
+          "action": "generate_docx"
+        }
+      ]
     }
   },
   "communication": {
     "message_bus": {
       "enabled": true,
-      "topics": ["tasks", "results", "alerts"]
+      "topics": [
+        "tasks",
+        "results",
+        "alerts"
+      ]
     },
     "inter_agent": {
       "protocol": "sessions_send",
