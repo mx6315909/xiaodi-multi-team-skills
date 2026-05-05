@@ -56,13 +56,26 @@ metadata:
 自动将 Markdown 内容排版为专业 docx 文档，支持三种风格：
 - **default**: 常规风格（宋体 11pt，1.5 行距）
 - **compact**: 紧凑风格（小字体，窄边距）
-- **report**: 报告风格（公文标准，大标题，宽边距）
-
-
+- **report**: 报告风格（公文标准：仿宋_GB2312 三号正文，黑体标题，宽边距）
 
 ```
 帮我整理这份文档的格式
 [粘贴文档内容]
+```
+
+**命令行快捷使用（doc_formatter.py）**：
+```bash
+# 从文件读取，生成 report 风格公文
+python scripts/doc_formatter.py 调研报告.md -o 调研报告.docx --style report
+
+# 从 stdin 读取，默认风格
+cat 内容.md | python scripts/doc_formatter.py -o 输出.docx
+
+# 紧凑模式，自定义字体
+python scripts/doc_formatter.py 文档.md -o 输出.docx --style compact --font-name 微软雅黑
+
+# 查看所有选项
+python scripts/doc_formatter.py --help
 ```
 
 ### 生成思维导图
