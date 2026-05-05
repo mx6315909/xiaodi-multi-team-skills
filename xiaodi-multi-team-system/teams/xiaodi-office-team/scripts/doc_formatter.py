@@ -292,8 +292,12 @@ def main():
         options['font_size'] = 10
         options['margins'] = {'top': 2.0, 'bottom': 2.0, 'left': 2.5, 'right': 2.5}
     elif args.style == 'report':
+        # 公文标准：仿宋_GB2312 三号(16pt)，黑体标题
+        options['font_name'] = '仿宋_GB2312'
+        options['heading_font'] = '黑体'
+        options['font_size'] = 16
         options['line_spacing'] = 1.8
-        options['heading_sizes'] = {1: 22, 2: 16, 3: 14, 4: 12}
+        options['heading_sizes'] = {1: 18, 2: 16, 3: 14, 4: 12}
         options['margins'] = {'top': 3.7, 'bottom': 3.5, 'left': 2.8, 'right': 2.6}
     
     result = format_markdown_to_docx(text, args.output, options)
