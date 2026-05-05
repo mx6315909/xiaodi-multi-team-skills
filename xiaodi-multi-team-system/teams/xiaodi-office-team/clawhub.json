@@ -1,21 +1,31 @@
 {
   "name": "xiaodi-office-team",
   "version": "1.0.0",
-  "description": "小弟办公秘书团队，4 个专业角色协作完成日程管理、邮件处理、文档整理、会议纪要。",
+  "description": "小弟办公秘书团队，5 个专业角色协作完成日程管理、邮件处理、文档排版、文档整理、会议纪要。",
   "author": "xiaodi <mxbot-xiaodi@agentmail.to>",
   "license": "MIT",
   "category": "Productivity",
-  "tags": ["office", "meeting", "email", "document", "schedule", "secretary", "xiaodi"],
+  "tags": [
+    "office",
+    "meeting",
+    "email",
+    "document",
+    "schedule",
+    "secretary",
+    "xiaodi"
+  ],
   "pricing": {
     "type": "free"
   },
   "features": [
-    "4 个专业角色协作（日程管理/邮件处理/文档管理/会议助手）",
     "会议纪要自动生成",
-    "邮件智能分类和回复建议",
-    "文档格式规范化",
-    "日程冲突检测",
-    "待办事项提取"
+    "多 Agent 协作架构 (Master-Worker)",
+    "多风格排版（default/compact/report）",
+    "工作流编排",
+    "思维导图多格式输出",
+    "文档排版（Markdown→docx）",
+    "智能任务路由",
+    "消息总线通信"
   ],
   "agents": {
     "default": {
@@ -36,19 +46,14 @@
     "coordinator": {
       "path": "scripts/coordinator.py",
       "description": "团队协调器 - 任务路由与工作流编排"
+    },
+    "doc_formatter": {
+      "path": "scripts/doc_formatter.py",
+      "description": "文档排版工具 - Markdown 转专业 docx"
     }
   },
   "data": {
     "meetings": "data/meetings/",
     "mindmaps": "data/mindmaps/"
-  },
-  "features": [
-    "5 个专业角色协作",
-    "多 Agent 协作架构 (Master-Worker)",
-    "智能任务路由",
-    "工作流编排",
-    "消息总线通信",
-    "会议纪要自动生成",
-    "思维导图多格式输出"
-  ]
+  }
 }
