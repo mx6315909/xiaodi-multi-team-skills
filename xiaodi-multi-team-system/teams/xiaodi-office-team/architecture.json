@@ -97,7 +97,12 @@
     },
     "document-manager": {
       "name": "文档管理师",
-      "role": "文档整理、格式规范、版本管理",
+      "role": "文档整理、格式规范、版本管理、智能排版",
+      "typography": {
+        "script": "doc_formatter.py",
+        "styles": ["default", "compact", "report"],
+        "description": "将 Markdown 内容自动排版为专业 docx 文档"
+      },
       "icon": "📄",
       "model": {
         "primary": "bailian/glm-5"
@@ -118,8 +123,9 @@
         "智能文档排版（Markdown→docx）"
       ],
       "format_standards": {
-        "font": "仿宋_GB2312",
-        "font_size": "三号(16pt)",
+        "body_font": "仿宋_GB2312",
+        "heading_font": "黑体",
+        "body_size": "三号(16pt)",
         "line_spacing": "28磅",
         "margins": {
           "top": "3.7cm",
@@ -262,24 +268,26 @@
       "name": "文档排版工作流",
       "steps": [
         {
-          "id": "analyze",
+          "id": "parse_markdown",
           "agent": "document-manager",
-          "action": "analyze_content"
+          "action": "parse_markdown_content"
         },
         {
-          "id": "format",
-          "agent": "document-manager",
-          "action": "format_document"
-        },
-        {
-          "id": "validate",
+          "id": "select_style",
           "agent": "office-director",
-          "action": "quality_check"
+          "action": "determine_typography_style"
         },
         {
-          "id": "output",
+          "id": "run_formatter",
           "agent": "document-manager",
-          "action": "generate_docx"
+          "action": "run_doc_formatter",
+          "script": "doc_formatter.py"
+        },
+        {
+          "id": "quality_check",
+          "agent": "office-director",
+          "condition": "${run_formatter.success}",
+          "action": "validate_output_format"
         }
       ]
     }
